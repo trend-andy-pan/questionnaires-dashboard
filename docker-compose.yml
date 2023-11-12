@@ -1,0 +1,40 @@
+version: "3.5"
+name: questionnaires
+
+services:
+  grafana:
+    env_file: .env
+    container_name: questionnaires-grafana
+    networks:
+      - LAN
+    image: grafana/grafana:10.1.2
+    ports:
+      - 80:3000
+    volumes:
+      - ./plugins/magnesium-wordcloud-panel:/var/lib/grafana/plugins/magnesium-wordcloud-panel
+      - ./lib/mongodb-grafana-master/dist:/var/lib/grafana/plugins/mongodb
+      - ./grafana.ini:/etc/grafana/grafana.ini
+      - ./dashboards:/var/lib/grafana/dashboards
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+
+  mongodb_proxy:
+    container_name: questionnaires-mongodb_proxy
+    networks:
+      - LAN
+    image: node:18
+    volumes:
+      - ./lib/mongodb-grafana-master:/mongodb_proxy
+    ports:
+      - 3333:3333
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd mongodb_proxy
+        npm i && npm run server
+
+networks:
+  LAN:
+    driver: bridge
+    name: questionnaires

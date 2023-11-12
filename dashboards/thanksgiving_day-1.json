@@ -1,0 +1,95 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "description": "",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 2,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "datasource": {
+                "type": "grafana-mongodb-datasource",
+                "uid": "P91231FF9AB6685FA"
+            },
+            "description": "",
+            "gridPos": {
+                "h": 15,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 1,
+            "options": {
+                "datasource_count_field": "count",
+                "datasource_tags_field": "_id",
+                "series_index": 0,
+                "wordCloudOptions": {
+                    "deterministic": true,
+                    "enableTooltip": false,
+                    "fontFamily": "arial",
+                    "fontSizes": [
+                        15,
+                        80
+                    ],
+                    "padding": 1,
+                    "rotationAngles": [
+                        0,
+                        90
+                    ],
+                    "rotations": 2,
+                    "scale": "log",
+                    "spiral": "archimedean",
+                    "transitionDuration": 800
+                }
+            },
+            "pluginVersion": "10.1.2",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "grafana-mongodb-datasource",
+                        "uid": "P91231FF9AB6685FA"
+                    },
+                    "rawQuery": true,
+                    "refId": "A",
+                    "target": "db.questionnaires.aggregate([\n{\"$match\": {\"answer-0\": {\"$nin\": [\"\"]}}},\n{\"$group\":{ \"_id\": \"$answer-0\", \"count\": { \"$sum\": 1}}}\n]);",
+                    "type": "table"
+                }
+            ],
+            "type": "magnesium-wordcloud-panel"
+        }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-30d",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "2023 thanksgiving day",
+    "uid": "e712397a-abaf-464e-a015-b889f8d0c8c4",
+    "version": 1,
+    "weekStart": ""
+}
